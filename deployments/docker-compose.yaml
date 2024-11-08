@@ -1,0 +1,13 @@
+services:
+  db:
+    container_name: felipe-challenge-db
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: devyx
+      POSTGRES_PASSWORD: devyxpasswd
+      POSTGRES_DB: challenge-db
+      PGDATA: /data/postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

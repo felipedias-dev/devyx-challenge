@@ -1,0 +1,181 @@
+basePath: /
+definitions:
+  dto.CreateProductInputDTO:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  dto.CreateProductOutputDTO:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  dto.GetProductOutputDTO:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  dto.ListProductsOutputDTO:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  dto.UpdateProductInputDTO:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+host: localhost:3333
+info:
+  contact:
+    email: felipedias.dev@gmail.com
+    name: Felipe Dias
+  description: This is a doc for Products server.
+  title: Devyx Challenge API
+  version: "1.0"
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: List products
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: string
+      - description: Items per page
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Products found
+          schema:
+            items:
+              $ref: '#/definitions/dto.ListProductsOutputDTO'
+            type: array
+        "500":
+          description: Internal server error
+      summary: List products
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Create a product
+      parameters:
+      - description: Product data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateProductInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Product created
+          schema:
+            $ref: '#/definitions/dto.CreateProductOutputDTO'
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+      summary: Create a product
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Product deleted
+        "500":
+          description: Internal server error
+      summary: Delete a product
+      tags:
+      - products
+    get:
+      consumes:
+      - application/json
+      description: Get product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product found
+          schema:
+            $ref: '#/definitions/dto.GetProductOutputDTO'
+        "404":
+          description: Product not found
+        "500":
+          description: Internal server error
+      summary: Get product by ID
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Update a product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Product data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateProductInputDTO'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Product updated
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+      summary: Update a product
+      tags:
+      - products
+swagger: "2.0"
